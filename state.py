@@ -1,21 +1,22 @@
 class StateManager(object):
-	def __init__(self):
-		self.stack = list()
-		self.active = None
 
-	def switchTo(self, state):
-		state.sm = self
+    def __init__(self):
+        self.stack = list()
+        self.active = None
 
-		if self.active != None:
-			self.active.close()
-			self.stack.append(state)
-		else:
-			self.active = state
+    def switchTo(self, state):
+        state.sm = self
 
-	def doModal(self):
-		while self.active != None:
-			self.active.doModal()
-			self.active = None
+        if self.active is not None:
+            self.active.close()
+            self.stack.append(state)
+        else:
+            self.active = state
 
-			if len(self.stack) > 0:
-				self.active = self.stack.pop(0)
+    def doModal(self):
+        while self.active is not None:
+            self.active.doModal()
+            self.active = None
+
+            if len(self.stack) > 0:
+                self.active = self.stack.pop(0)
