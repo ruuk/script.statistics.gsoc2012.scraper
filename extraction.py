@@ -220,3 +220,29 @@ def extractVideoFiles(files, onProgress, isInterrupted):
             break
 
     return videoFiles
+
+
+def extractSettings(files, onProgress, isInterrupted):
+    result = getSettings()
+
+    settings = list()
+    nbrSettings = len(result)
+
+    for i in range(nbrSettings):
+        m = result[i]
+
+        if onProgress:
+            onProgress(i * 100 / nbrSettings)
+
+        sid = m["id"]
+        setting = {
+            "id": sid,
+            "value": getSetting(sid)
+        }
+
+        settings.append(setting)
+
+        if isInterrupted():
+            break
+
+    return settings

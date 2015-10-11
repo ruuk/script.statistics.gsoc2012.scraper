@@ -48,6 +48,15 @@ try:
     def getMusicVideos(properties):
         result = doXBMCRequest("VideoLibrary.GetMusicVideos", properties=properties)
         return safeGet(result, "musicvideos", [])
+
+    def getSettings():
+        result = doXBMCRequest("Settings.GetSettings")
+        return safeGet(result, "settings", [])
+
+    def getSetting(name):
+        result = doXBMCRequest("Settings.GetSettingValue", properties={'setting': name})
+        return safeGet(result, "value", "")
+
 except:
     import jsonrpclib
 
